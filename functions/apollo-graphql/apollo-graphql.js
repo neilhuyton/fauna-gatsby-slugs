@@ -28,9 +28,7 @@ const typeDefs = gql`
   }
 
   type SlugObject {
-    slugId: String
     slug: String
-    slugs: [String]
   }
 `;
 
@@ -51,13 +49,17 @@ const resolvers = {
     // GET SLUG BY SLUG
     getSlugsBySlug: async (root, args, context) => {
       const results = await client.query(
-        q.Paginate(q.Match(q.Index("get-slugs-by-slug"), args.slug))
+        q.Paginate(
+          q.Match(q.Index("get-slugs-by-slug"), "/posts/2020/04/post-five/")
+        )
       );
 
+      console.log("results", results);
+
       return results.data.map(([ref, slug, slugs]) => ({
-        slugId: ref.id,
+        // slugId: ref.id,
         slug,
-        slugs,
+        // slugs,
       }));
     },
   },

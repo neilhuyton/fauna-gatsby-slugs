@@ -49,7 +49,7 @@ module.exports = {
   },
   // GET SLUGS BY SLUG
   getSlugsBySlug: async () => {
-    const slug = "/posts/some-post";
+    const slug = "/posts/2020/04/post-five/";
     const results = await client.query(
       q.Paginate(q.Match(q.Index("get-slugs-by-slug"), slug))
     );

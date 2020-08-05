@@ -20,15 +20,13 @@ import { gql } from "apollo-boost";
 
 import Seo from "../components/Seo";
 import Slug from "../components/Slug";
-import SlugForm from "../components/SlugForm";
+// import SlugForm from "../components/SlugForm";
 import { useConfig } from "../utils/useConfig";
 
 const GET_SLUGS_BY_SLUG = gql`
   query($slug: String!) {
     getSlugsBySlug(slug: $slug) {
-      slugId
       slug
-      slugs
     }
   }
 `;
@@ -125,29 +123,27 @@ const PostsLayout = ({
         </Box>
       </Flex>
       <Divider />
-      {loading && <Spinner />}
-      {error && <Text>{`${error}`}</Text>}
+      {/* {loading && <Spinner />} */}
+      {/* {error && <Text>{`${error}`}</Text>} */}
       <Divider />
-      {/* {data &&
-        data.getSlugsBySlug
-          .filter((slug) => slug.isApproved)
-          .map((slug, index) => (
-            <Fragment key={index}>
-              <Text
-                sx={{
-                  color: "secondary",
-                  mb: 2,
-                  fontStyle: "italic",
-                }}
-              >
-                Slugs
-              </Text>
-              <Divider />
-              <Slug {...slug} />
-              <Divider />
-            </Fragment>
-          ))} */}
-      <SlugForm slug={slug} />
+      {data &&
+        data.getSlugsBySlug.map((slug, index) => (
+          <Fragment key={index}>
+            <Text
+              sx={{
+                color: "secondary",
+                mb: 2,
+                fontStyle: "italic",
+              }}
+            >
+              Slugs
+            </Text>
+            <Divider />
+            <Slug {...slug} />
+            <Divider />
+          </Fragment>
+        ))}
+      {/* <SlugForm slug={slug} /> */}
       <Divider />
     </Box>
   );

@@ -1,13 +1,13 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { format } from "date-fns";
+// import PropTypes from "prop-types";
+// import { format } from "date-fns";
 import {
   Flex,
   Box,
   Text,
   Heading,
-  Button,
-  Link,
+  // Button,
+  // Link,
   Divider,
 } from "@theme-ui/components";
 
@@ -160,21 +160,21 @@ Slug.defaultProps = {
   isAdmin: false,
 };
 
-Slug.propTypes = {
-  /** The slug Id */
-  slugId: PropTypes.string.isRequired,
-  /** Status of commnet - only show if isAdmin = true */
-  isApproved: PropTypes.bool.isRequired,
-  /** The slug of the post the slugs releated to - only show if isAdmin = true */
-  slug: PropTypes.string.isRequired,
-  /** The date the slug was posted */
-  date: PropTypes.string.isRequired,
-  /** The name of the person who submitted the slug */
-  name: PropTypes.string.isRequired,
-  /** The slug made by the user */
-  slug: PropTypes.string.isRequired,
-  /** Is admin logged in */
-  isAdmin: PropTypes.bool.isRequired,
-};
+// Slug.propTypes = {
+//   /** The slug Id */
+//   slugId: PropTypes.string.isRequired,
+//   /** Status of commnet - only show if isAdmin = true */
+//   // isApproved: PropTypes.bool.isRequired,
+//   /** The slug of the post the slugs releated to - only show if isAdmin = true */
+//   slug: PropTypes.string.isRequired,
+//   /** The date the slug was posted */
+//   // date: PropTypes.string.isRequired,
+//   /** The name of the person who submitted the slug */
+//   // name: PropTypes.string.isRequired,
+//   /** The slug made by the user */
+//   slugs: PropTypes.string.isRequired,
+//   /** Is admin logged in */
+//   // isAdmin: PropTypes.bool.isRequired,
+// };
 
 export default Slug;

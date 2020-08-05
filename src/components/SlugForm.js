@@ -62,7 +62,7 @@ const SlugForm = ({ slug }) => {
       </Text>
 
       <Formik
-        initialValues={initialValues}
+        // initialValues={initialValues}
         isSubmitting={loading}
         errors={error}
         // validationSchema={schema}
