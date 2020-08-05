@@ -26,6 +26,7 @@ import { useConfig } from "../utils/useConfig";
 const GET_SLUGS_BY_SLUG = gql`
   query($slug: String!) {
     getSlugsBySlug(slug: $slug) {
+      slugId
       slug
     }
   }
@@ -123,8 +124,8 @@ const PostsLayout = ({
         </Box>
       </Flex>
       <Divider />
-      {/* {loading && <Spinner />} */}
-      {/* {error && <Text>{`${error}`}</Text>} */}
+      {loading && <Spinner />}
+      {error && <Text>{`${error}`}</Text>}
       <Divider />
       {data &&
         data.getSlugsBySlug.map((slug, index) => (
@@ -139,7 +140,9 @@ const PostsLayout = ({
               Slugs
             </Text>
             <Divider />
+
             <Slug {...slug} />
+            
             <Divider />
           </Fragment>
         ))}

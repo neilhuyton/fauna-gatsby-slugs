@@ -11,13 +11,10 @@ import {
   Divider,
 } from "@theme-ui/components";
 
-import SvgIcon from "./SvgIcon";
-import { QUOTE_ICON, DELETE_ICON, APPROVE_ICON } from "../utils/iconPaths";
-
 const QUOTE_ICON_SIZE = 32;
 
 const Slug = ({ slugId, slug, slugs }) => {
-  console.log("slug", slug, "slugs", slugs);
+  console.log("slugId", slugId, "slugs", slugs, "slug", slug, "slugs", slugs);
   return (
     <Box
       as="section"
@@ -44,18 +41,6 @@ const Slug = ({ slugId, slug, slugs }) => {
           pb: 4,
         }}
       >
-        <SvgIcon
-          iconPath={QUOTE_ICON}
-          sx={{
-            alignSelf: "flex-start",
-            color: "muted",
-            display: ["none", "flex"],
-            mt: `-${QUOTE_ICON_SIZE / 2.5}px`,
-            mr: 2,
-            minWidth: QUOTE_ICON_SIZE,
-            transform: "scaleX(-1)",
-          }}
-        />
         <Text
           as="small"
           variant="styles.small"
@@ -69,17 +54,6 @@ const Slug = ({ slugId, slug, slugs }) => {
         >
           {slug}
         </Text>
-        <SvgIcon
-          iconPath={QUOTE_ICON}
-          sx={{
-            alignSelf: "flex-end",
-            color: "muted",
-            display: ["none", "flex"],
-            mb: `-${QUOTE_ICON_SIZE / 2.5}px`,
-            ml: 2,
-            minWidth: QUOTE_ICON_SIZE,
-          }}
-        />
       </Flex>
       <Box
         sx={{

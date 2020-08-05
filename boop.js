@@ -10,12 +10,14 @@ module.exports = {
   // CREATE SLUG
   createSlug: async () => {
     const slug = "/posts/2020/04/post-five/";
-    const slugs = ["/cool-slug3/", "/gross-slug3/"];
+    const childSlug = "/cool-slug1/";
+
     const results = await client.query(
       q.Create(q.Collection(COLLECTION_NAME), {
         data: {
+          date: new Date().toString(),
           slug,
-          slugs,
+          childSlug,
         },
       })
     );
@@ -55,7 +57,7 @@ module.exports = {
     );
     console.log(JSON.stringify(results, null, 2));
     return results.data.map(([ref, slug, slugs]) => ({
-      // slugId: ref.id,
+      slugId: ref.id,
       slug,
       slugs,
     }));

@@ -15,7 +15,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    createSlug(slug: String!, slug: [String!]: CreatedSlug
+    createSlug(slug: String!, slug: [String!]): CreatedSlug
     deleteSlugById(slugId: String!): DeletedSlug
   }
 
@@ -28,7 +28,10 @@ const typeDefs = gql`
   }
 
   type SlugObject {
+    slugId: String
+    date: String
     slug: String
+    childSlug: String
   }
 `;
 
@@ -49,9 +52,7 @@ const resolvers = {
     // GET SLUG BY SLUG
     getSlugsBySlug: async (root, args, context) => {
       const results = await client.query(
-        q.Paginate(
-          q.Match(q.Index("get-slugs-by-slug"), "/posts/2020/04/post-five/")
-        )
+        q.Paginate(q.Match(q.Index("get-slugs-by-slug"), args.slug))
       );
 
       console.log("results", results);
@@ -59,7 +60,7 @@ const resolvers = {
       return results.data.map(([ref, slug, slugs]) => ({
         // slugId: ref.id,
         slug,
-        // slugs,
+        slugs,
       }));
     },
   },
