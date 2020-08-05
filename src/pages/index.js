@@ -31,17 +31,17 @@ const IndexPage = () => {
       </Heading>
       <Divider />
       <Heading as="h4" variant="styles.h4">
-        Roll your own comments with Gatsby and FaunaDB
+        Roll your own slugs with Gatsby and FaunaDB
       </Heading>
       <Text>
         In this tutorial we'll learn how to write all the{" "}
         <Link href="https://dashboard.fauna.com/" target="_blank">
           FaunaDB
         </Link>{" "}
-        {""} operations required to drive a Gatsby Blog commenting system.
+        {""} operations required to drive a Gatsby Blog slug system.
         <Divider />
-        This comments app also uses the Netlify Identity Widget, Netlify
-        Continuous Deployment, Netlify serverless functions and Apollo/GraphQL
+        This slug app also uses the Netlify Identity Widget, Netlify Continuous
+        Deployment, Netlify serverless functions and Apollo/GraphQL
       </Text>
       <Divider />
       <Text

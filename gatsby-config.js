@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
-    name: "Comments App",
-    description: "Roll your own comments with Gatsby and FaunaDB",
+    name: "Slugs App",
+    description: "Roll your own slugs with Gatsby and FaunaDB",
     keywords: [
       "React",
       "Gatsby",
@@ -12,8 +12,8 @@ module.exports = {
       "Apollo",
       "GraphQL",
     ],
-    siteUrl: "https://fauna-gatsby-comments.netlify.com",
-    siteImage: "images/comments-app-open-graph-image.jpg",
+    siteUrl: "https://fauna-gatsby-slugs.netlify.com",
+    siteImage: "images/slugs-app-open-graph-image.jpg",
     profileImage: ``,
     lang: `en`,
   },

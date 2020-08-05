@@ -6,32 +6,32 @@ import { gql } from "apollo-boost";
 
 import { AppContext } from "../components/AppContext";
 
-import Comment from "../components/Comment";
+import Slug from "../components/Slug";
 
 const GET_ALL_COMMENTS = gql`
   query {
-    getAllComments {
-      commentId
+    getAllSlugs {
+      slugId
       isApproved
       slug
       date
       name
-      comment
+      slug
     }
   }
 `;
 
 const DELETE_COMMENT_BY_ID = gql`
-  mutation($commentId: String!) {
-    deleteCommentById(commentId: $commentId) {
-      commentId
+  mutation($slugId: String!) {
+    deleteSlugById(slugId: $slugId) {
+      slugId
     }
   }
 `;
 
 const APPROVE_COMMENT_BY_ID = gql`
-  mutation($commentId: String!) {
-    approveCommentById(commentId: $commentId) {
+  mutation($slugId: String!) {
+    approveSlugById(slugId: $slugId) {
       isApproved
     }
   }
@@ -45,8 +45,8 @@ const AdminPage = () => {
   const isAdmin = () => admin && admin.id === process.env.GATSBY_ADMIN_ID;
 
   const { loading, error, data } = useQuery(GET_ALL_COMMENTS);
-  const [deleteCommentById] = useMutation(DELETE_COMMENT_BY_ID);
-  const [approveCommentById] = useMutation(APPROVE_COMMENT_BY_ID);
+  const [deleteSlugById] = useMutation(DELETE_COMMENT_BY_ID);
+  const [approveSlugById] = useMutation(APPROVE_COMMENT_BY_ID);
 
   return (
     <Fragment>
@@ -75,25 +75,26 @@ const AdminPage = () => {
 
       {isAdmin() &&
         data &&
-        data.getAllComments.map((comment, index) => {
-          const { commentId } = comment;
+        data.getAllSlugs.map((slug, index) => {
+          console.log("slug", slug);
+          const { slugId } = slug;
           return (
             <Fragment key={index}>
-              <Comment
-                {...comment}
+              <Slug
+                {...slug}
                 isAdmin={isAdmin()}
                 onApprove={() =>
-                  approveCommentById({
+                  approveSlugById({
                     variables: {
-                      commentId,
+                      slugId,
                     },
                     refetchQueries: [{ query: GET_ALL_COMMENTS }],
                   })
                 }
                 onDelete={() =>
-                  deleteCommentById({
+                  deleteSlugById({
                     variables: {
-                      commentId,
+                      slugId,
                     },
                     refetchQueries: [{ query: GET_ALL_COMMENTS }],
                   })

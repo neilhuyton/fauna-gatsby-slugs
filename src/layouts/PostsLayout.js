@@ -19,19 +19,16 @@ import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 
 import Seo from "../components/Seo";
-import Comment from "../components/Comment";
-import CommentForm from "../components/CommentForm";
+import Slug from "../components/Slug";
+import SlugForm from "../components/SlugForm";
 import { useConfig } from "../utils/useConfig";
 
 const GET_COMMENTS_BY_SLUG = gql`
   query($slug: String!) {
-    getCommentsBySlug(slug: $slug) {
-      commentId
-      isApproved
+    getSlugsBySlug(slug: $slug) {
+      slugId
       slug
-      date
-      name
-      comment
+      slugs
     }
   }
 `;
@@ -132,9 +129,9 @@ const PostsLayout = ({
       {error && <Text>{`${error}`}</Text>}
       <Divider />
       {data &&
-        data.getCommentsBySlug
-          .filter((comment) => comment.isApproved)
-          .map((comment, index) => (
+        data.getSlugsBySlug
+          .filter((slug) => slug.isApproved)
+          .map((slug, index) => (
             <Fragment key={index}>
               <Text
                 sx={{
@@ -143,14 +140,14 @@ const PostsLayout = ({
                   fontStyle: "italic",
                 }}
               >
-                Comments
+                Slugs
               </Text>
               <Divider />
-              <Comment {...comment} />
+              <Slug {...slug} />
               <Divider />
             </Fragment>
           ))}
-      <CommentForm slug={slug} />
+      <SlugForm slug={slug} />
       <Divider />
     </Box>
   );

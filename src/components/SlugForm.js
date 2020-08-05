@@ -19,35 +19,35 @@ import { Form, Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 const NAME_FIELD = "name";
-const COMMENT_FIELD = "comment";
+const SLUG_FIELD = "slug";
 
 const initialValues = {
   name: "",
-  comment: "",
+  slug: "",
 };
 
 const schema = Yup.object().shape({
   name: Yup.string()
     .min(3, "Name must be at least 3 characters")
     .required("Please enter your name"),
-  comment: Yup.string()
-    .min(10, "Comment must be at least 10 characters")
-    .required("Please enter a comment"),
+  slug: Yup.string()
+    .min(10, "Slug must be at least 10 characters")
+    .required("Please enter a slug"),
 });
 
-const CREATE_COMMENT = gql`
-  mutation($slug: String!, $name: String!, $comment: String!) {
-    createComment(slug: $slug, name: $name, comment: $comment) {
-      commentId
+const CREATE_SLUG = gql`
+  mutation($slug: String!, $slugs: [String!]) {
+    createSlug(slug: $slug, slugs: $slugs) {
+      slugId
     }
   }
 `;
 
-const CommentForm = ({ slug }) => {
+const SlugForm = ({ slug }) => {
   const [isFormSent, setIsFormSent] = useState(false);
   const [isFormError, setIsFormError] = useState(false);
 
-  const [createComment, { loading, error }] = useMutation(CREATE_COMMENT);
+  const [createSlug, { loading, error }] = useMutation(CREATE_SLUG);
 
   return (
     <Fragment>
@@ -58,7 +58,7 @@ const CommentForm = ({ slug }) => {
           fontStyle: "italic",
         }}
       >
-        Leave a comment
+        Leave a slug
       </Text>
 
       <Formik
@@ -67,11 +67,10 @@ const CommentForm = ({ slug }) => {
         errors={error}
         validationSchema={schema}
         onSubmit={async (values, { resetForm }) => {
-          await createComment({
+          await createSlug({
             variables: {
               slug: slug,
-              name: values.name,
-              comment: values.comment,
+              slugs: values.slugs,
             },
           })
             .then(() => {
@@ -123,33 +122,33 @@ const CommentForm = ({ slug }) => {
                 )}
               </Field>
               <Divider />
-              <Field name={COMMENT_FIELD}>
+              <Field name={SLUG_FIELD}>
                 {({ field }) => (
                   <Box
                     sx={{
                       mb: 4,
                     }}
                   >
-                    <Label labelFor={COMMENT_FIELD}>You comment</Label>
+                    <Label labelFor={SLUG_FIELD}>You slug</Label>
                     <Textarea
                       {...field}
-                      name={COMMENT_FIELD}
-                      placeholder="Enter your comment"
-                      value={values.comment}
+                      name={SLUG_FIELD}
+                      placeholder="Enter your slug"
+                      value={values.slug}
                       onChange={handleChange}
                       sx={{
                         mb: 2,
                       }}
                     />
                     <ErrorMessage
-                      name={COMMENT_FIELD}
+                      name={SLUG_FIELD}
                       render={() => (
                         <Text
                           as="small"
                           variant="styles.small"
                           sx={{ color: "error", position: "absolute" }}
                         >
-                          {errors.comment}
+                          {errors.slug}
                         </Text>
                       )}
                     />
@@ -174,7 +173,7 @@ const CommentForm = ({ slug }) => {
                       variant="styles.small"
                       sx={{ color: "success" }}
                     >
-                      Comment sent ok!
+                      Slug sent ok!
                     </Text>
                   )}
                   {isFormError && (
@@ -191,7 +190,7 @@ const CommentForm = ({ slug }) => {
                   variant="secondary"
                   type="submit"
                   disabled={
-                    isSubmitting || !dirty || !!errors.name || !!errors.comment
+                    isSubmitting || !dirty || !!errors.name || !!errors.slug
                   }
                 >
                   {isSubmitting ? (
@@ -212,9 +211,9 @@ const CommentForm = ({ slug }) => {
   );
 };
 
-CommentForm.propTypes = {
-  /** The slug of the post the comments releated to - only show if isAdmin = true */
+SlugForm.propTypes = {
+  /** The slug of the post the slugs releated to - only show if isAdmin = true */
   slug: PropTypes.string.isRequired,
 };
 
-export default CommentForm;
+export default SlugForm;

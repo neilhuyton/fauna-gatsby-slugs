@@ -10,121 +10,100 @@ const COLLECTION_NAME = process.env.GATSBY_FAUNA_COLLECTION;
 
 const typeDefs = gql`
   type Query {
-    getAllComments: [CommentObject]
-    getCommentsBySlug(slug: String!): [CommentObject]
+    getAllSlugs: [SlugObject]
+    getSlugsBySlug(slug: String!): [SlugObject]
   }
 
   type Mutation {
-    createComment(slug: String!, name: String!, comment: String): CreatedComment
-    deleteCommentById(commentId: String!): DeletedComment
-    approveCommentById(commentId: String!): ApprovedComment
+    createSlug(slug: String!, slug: [String!]: CreatedSlug
+    deleteSlugById(slugId: String!): DeletedSlug
   }
 
-  type DeletedComment {
-    commentId: String
+  type DeletedSlug {
+    slugId: String
   }
 
-  type ApprovedComment {
-    isApproved: Boolean
+  type CreatedSlug {
+    slugId: String
   }
 
-  type CreatedComment {
-    commentId: String
-  }
-
-  type CommentObject {
-    commentId: String
-    isApproved: Boolean
+  type SlugObject {
+    slugId: String
     slug: String
-    date: String
-    name: String
-    comment: String
+    slugs: [String]
   }
 `;
 
 const resolvers = {
   Query: {
-    // GET ALL COMMENTS
-    getAllComments: async () => {
+    // GET ALL SLUGS
+    getAllSlugs: async () => {
       const results = await client.query(
-        q.Paginate(q.Match(q.Index("get-all-comments")))
+        q.Paginate(q.Match(q.Index("get-all-slugs")))
       );
-      return results.data.map(
-        ([ref, isApproved, slug, date, name, comment]) => ({
-          commentId: ref.id,
-          isApproved,
-          slug,
-          date,
-          name,
-          comment,
-        })
-      );
+      return results.data.map(([ref, slug, slugs]) => ({
+        slugId: ref.id,
+        slug,
+        slugs,
+      }));
     },
 
-    // GET COMMENT BY SLUG
-    getCommentsBySlug: async (root, args, context) => {
+    // GET SLUG BY SLUG
+    getSlugsBySlug: async (root, args, context) => {
       const results = await client.query(
-        q.Paginate(q.Match(q.Index("get-comments-by-slug"), args.slug))
+        q.Paginate(q.Match(q.Index("get-slugs-by-slug"), args.slug))
       );
 
-      return results.data.map(
-        ([ref, isApproved, slug, date, name, comment]) => ({
-          commentId: ref.id,
-          isApproved,
-          slug,
-          date,
-          name,
-          comment,
-        })
-      );
+      return results.data.map(([ref, slug, slugs]) => ({
+        slugId: ref.id,
+        slug,
+        slugs,
+      }));
     },
   },
 
   Mutation: {
-    // CREATE COMMENT
-    createComment: async (root, args, context) => {
+    // CREATE SLUG
+    createSlug: async (root, args, context) => {
       const results = await client.query(
         q.Create(q.Collection(COLLECTION_NAME), {
           data: {
-            isApproved: false,
             slug: args.slug,
-            date: new Date().toString(),
-            name: args.name,
-            comment: args.comment,
+            slugs: args.slugs,
           },
         })
       );
 
       return {
-        commentId: results.ref.id,
+        slugId: results.ref.id,
       };
     },
 
-    // DELETE COMMENT BY ID
-    deleteCommentById: async (root, args, context) => {
+    // DELETE SLUG BY ID
+    deleteSlugById: async (root, args, context) => {
       const results = await client.query(
-        q.Delete(q.Ref(q.Collection(COLLECTION_NAME), args.commentId))
+        q.Delete(q.Ref(q.Collection(COLLECTION_NAME), args.slugId))
       );
 
       return {
-        commentId: results.ref.id,
+        slugId: results.ref.id,
       };
     },
 
-    // APPROVE COMMENT BY ID
-    approveCommentById: async (root, args, context) => {
-      const results = await client.query(
-        q.Update(q.Ref(q.Collection(COLLECTION_NAME), args.commentId), {
-          data: {
-            isApproved: true,
-          },
-        })
-      );
+    // APPROVE SLUG BY ID
+    // approveSlugById: async (root, args, context) => {
+    //   const results = await client.query(
+    //     q.Update(q.Ref(q.Collection(COLLECTION_NAME), args.slugId), {
+    //       data: {
+    //         isApproved: true,
+    //       },
+    //     })
+    //   );
 
-      return {
-        isApproved: results.isApproved,
-      };
-    },
+    //   return {
+    //     isApproved: results.isApproved,
+    //   };
+    // },
   },
 };
 

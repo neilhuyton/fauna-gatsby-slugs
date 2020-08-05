@@ -16,17 +16,8 @@ import { QUOTE_ICON, DELETE_ICON, APPROVE_ICON } from "../utils/iconPaths";
 
 const QUOTE_ICON_SIZE = 32;
 
-const Comment = ({
-  commentId,
-  isApproved,
-  slug,
-  date,
-  name,
-  comment,
-  isAdmin,
-  onApprove,
-  onDelete,
-}) => {
+const Slug = ({ slugId, slug, slugs }) => {
+  console.log("slug", slug, "slugs", slugs);
   return (
     <Box
       as="section"
@@ -42,10 +33,10 @@ const Comment = ({
         }}
       >
         <Heading as="h6" variant="styles.h6" sx={{ color: "gray" }}>
-          {name}
+          {slug}
         </Heading>
         <Text variant="styles.small" sx={{ color: "highlight", mb: 2 }}>
-          {format(new Date(date), "d MMMM u")}
+          {/* {format(new Date(date), "d MMMM u")} */}
         </Text>
       </Box>
       <Flex
@@ -76,7 +67,7 @@ const Comment = ({
             fontStyle: "italic",
           }}
         >
-          {comment}
+          {slug}
         </Text>
         <SvgIcon
           iconPath={QUOTE_ICON}
@@ -95,7 +86,7 @@ const Comment = ({
           mt: 3,
         }}
       >
-        {isAdmin ? (
+        {/* {isAdmin ? (
           <Flex
             sx={{
               justifyContent: "space-between",
@@ -112,7 +103,7 @@ const Comment = ({
                 Approved: {isApproved ? "true" : "false"}
               </Text>
               <Text as="small" variant="styles.small">
-                Comment Id: {commentId}
+                Slug Id: {slugId}
               </Text>
               <Flex>
                 <Text as="small" variant="styles.small" sx={{ mr: 1 }}>
@@ -133,7 +124,7 @@ const Comment = ({
               <Button
                 variant="ghost"
                 sx={{ color: "error", mr: 3 }}
-                onClick={() => onDelete(commentId)}
+                onClick={() => onDelete(slugId)}
               >
                 <SvgIcon
                   iconPath={DELETE_ICON}
@@ -145,7 +136,7 @@ const Comment = ({
                 variant="secondary"
                 sx={{ backgroundColor: "success" }}
                 disabled={isApproved}
-                onClick={() => onApprove(commentId)}
+                onClick={() => onApprove(slugId)}
               >
                 {!isApproved && (
                   <SvgIcon
@@ -157,33 +148,33 @@ const Comment = ({
               </Button>
             </Flex>
           </Flex>
-        ) : null}
+        ) : null} */}
         <Divider />
       </Box>
     </Box>
   );
 };
 
-Comment.defaultProps = {
+Slug.defaultProps = {
   isApproved: false,
   isAdmin: false,
 };
 
-Comment.propTypes = {
-  /** The comment Id */
-  commentId: PropTypes.string.isRequired,
+Slug.propTypes = {
+  /** The slug Id */
+  slugId: PropTypes.string.isRequired,
   /** Status of commnet - only show if isAdmin = true */
   isApproved: PropTypes.bool.isRequired,
-  /** The slug of the post the comments releated to - only show if isAdmin = true */
+  /** The slug of the post the slugs releated to - only show if isAdmin = true */
   slug: PropTypes.string.isRequired,
-  /** The date the comment was posted */
+  /** The date the slug was posted */
   date: PropTypes.string.isRequired,
-  /** The name of the person who submitted the comment */
+  /** The name of the person who submitted the slug */
   name: PropTypes.string.isRequired,
-  /** The comment made by the user */
-  comment: PropTypes.string.isRequired,
+  /** The slug made by the user */
+  slug: PropTypes.string.isRequired,
   /** Is admin logged in */
   isAdmin: PropTypes.bool.isRequired,
 };
 
-export default Comment;
+export default Slug;

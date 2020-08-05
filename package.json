@@ -1,7 +1,7 @@
 {
-  "name": "fauna-gatsby-comments",
+  "name": "fauna-gatsby-slugs",
   "version": "1.0.0",
-  "description": "Fauna powered comments for a Gatsby blog",
+  "description": "Fauna powered slugs for a Gatsby blog",
   "main": "index.js",
   "scripts": {
     "develop": "gatsby develop",
@@ -12,7 +12,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "netlify-lambda install"
   },
-  "author": "Paul Scanlon",
+  "author": "Neil Huyton",
   "license": "ISC",
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",
