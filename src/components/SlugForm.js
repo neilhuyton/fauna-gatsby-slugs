@@ -16,24 +16,24 @@ import { useMutation } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 
 import { Form, Formik, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
+// import * as Yup from "yup";
 
-const NAME_FIELD = "name";
-const SLUG_FIELD = "slug";
+// const NAME_FIELD = "name";
+// const SLUG_FIELD = "slug";
 
-const initialValues = {
-  name: "",
-  slug: "",
-};
+// const initialValues = {
+//   name: "",
+//   slug: "",
+// };
 
-const schema = Yup.object().shape({
-  name: Yup.string()
-    .min(3, "Name must be at least 3 characters")
-    .required("Please enter your name"),
-  slug: Yup.string()
-    .min(10, "Slug must be at least 10 characters")
-    .required("Please enter a slug"),
-});
+// const schema = Yup.object().shape({
+//   name: Yup.string()
+//     .min(3, "Name must be at least 3 characters")
+//     .required("Please enter your name"),
+//   slug: Yup.string()
+//     .min(10, "Slug must be at least 10 characters")
+//     .required("Please enter a slug"),
+// });
 
 const CREATE_SLUG = gql`
   mutation($slug: String!, $slugs: [String!]) {
@@ -65,7 +65,7 @@ const SlugForm = ({ slug }) => {
         initialValues={initialValues}
         isSubmitting={loading}
         errors={error}
-        validationSchema={schema}
+        // validationSchema={schema}
         onSubmit={async (values, { resetForm }) => {
           await createSlug({
             variables: {

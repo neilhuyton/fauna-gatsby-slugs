@@ -23,7 +23,7 @@ import Slug from "../components/Slug";
 import SlugForm from "../components/SlugForm";
 import { useConfig } from "../utils/useConfig";
 
-const GET_COMMENTS_BY_SLUG = gql`
+const GET_SLUGS_BY_SLUG = gql`
   query($slug: String!) {
     getSlugsBySlug(slug: $slug) {
       slugId
@@ -52,7 +52,7 @@ const PostsLayout = ({
     },
   } = useConfig();
 
-  const { loading, data, error } = useQuery(GET_COMMENTS_BY_SLUG, {
+  const { loading, data, error } = useQuery(GET_SLUGS_BY_SLUG, {
     variables: {
       slug: slug,
     },
@@ -128,7 +128,7 @@ const PostsLayout = ({
       {loading && <Spinner />}
       {error && <Text>{`${error}`}</Text>}
       <Divider />
-      {data &&
+      {/* {data &&
         data.getSlugsBySlug
           .filter((slug) => slug.isApproved)
           .map((slug, index) => (
@@ -146,7 +146,7 @@ const PostsLayout = ({
               <Slug {...slug} />
               <Divider />
             </Fragment>
-          ))}
+          ))} */}
       <SlugForm slug={slug} />
       <Divider />
     </Box>
